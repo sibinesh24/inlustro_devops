@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Test</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles5.css') }}">
+</head>
+<body>
+    <h1>Programming Test</h1>
+    <form id="testForm" action="/submit_test_results" method="POST">
+        <div id="questions">
+            <!-- Questions and answering fields will be generated here -->
+        </div>
+
+        <input type="submit" value="Submit Test">
+    </form>
+
+    <script>
+        function generateQuestions() {
+            var questions = "";
+            for (var i = 1; i <= 15; i++) { // Generate 15 random questions
+                questions += "<div>";
+                questions += "<p>Question " + i + ": Write a program to find the factorial of a number.</p>";
+                questions += "<textarea id='answer" + i + "' rows='4' cols='50' placeholder='Enter your answer'></textarea>";
+                questions += "<input type='hidden' name='answer" + i + "'>";
+                questions += "</div>";
+            }
+            document.getElementById("questions").innerHTML = questions;
+        }
+
+        generateQuestions(); // Generate questions on page load
+
+        // Function to capture user's answers and store them in hidden input fields
+        function captureAnswers() {
+            var answerInputs = document.querySelectorAll("#questions input[type='hidden']");
+            answerInputs.forEach(function(input, index) {
+                var userAnswer = document.getElementById("answer" + (index + 1)).value;
+                input.value = userAnswer;
+            });
+        }
+        
+        document.getElementById("testForm").addEventListener("submit", captureAnswers);
+    </script>
+</body>
+</html>

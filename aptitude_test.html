@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Test</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles5.css') }}">
+</head>
+<body>
+    <h1>Aptitude Test</h1>
+    <form id="testForm" action="/aptitude_test" method="POST">
+        <div id="questions">
+            {% for question in questions %}
+            <div>
+                <p>Question {{ loop.index }}: {{ question.question }}</p>
+                <input type="text" name="answer{{ loop.index }}" placeholder="Enter your answer">
+            </div>
+            {% endfor %}
+        </div>
+
+        <input type="submit" value="Submit Test">
+    </form>
+
+    <script>
+        document.getElementById("testForm").addEventListener("submit", function() {
+            var answers = document.querySelectorAll("#questions input[type='text']");
+            for (var i = 0; i < answers.length; i++) {
+                if (answers[i].value.trim() === "") {
+                    alert("Please answer all questions.");
+                    return false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
